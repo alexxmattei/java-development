@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.reflectionExamples.TestClass1;
 import com.company.reflectionExamples.TestClass2;
+import com.company.utils.Constants;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -9,8 +10,9 @@ import java.lang.reflect.Method;
 
 public class Main {
 
-    public static void main(String[] args) throws NoSuchFieldException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public static void main(String[] args) throws NoSuchFieldException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, ClassNotFoundException {
 
+        System.out.println(Constants.getInstance().delimiter + "TEST CLASS 1 W/ REFLECTION" + Constants.getInstance().delimiter);
         // TestClass1
         TestClass1 myTestObj = new TestClass1();
         Class myClassObj = myTestObj.getClass();
@@ -39,6 +41,7 @@ public class Main {
         methodCall3.setAccessible(true);
         methodCall3.invoke(myTestObj);
 
+        System.out.println(Constants.getInstance().delimiter + "TEST CLASS 2 W/ REFLECTION" + Constants.getInstance().delimiter);
         // TestClass2
         TestClass2 myObject2 = new TestClass2("This is a private value");
         Field privateStringField = TestClass2.class.getDeclaredField("privateString");
@@ -56,5 +59,17 @@ public class Main {
         String returnValue = (String) privateStringMethod.invoke(myObject2, null);
 
         System.out.println("return value = " + returnValue);
+
+        System.out.println(Constants.getInstance().delimiter + "TEST CLASS 3 W/ REFLECTION" + Constants.getInstance().delimiter);
+        // TestClass3
+
+        System.out.println(Constants.getInstance().delimiter + "ACCESS STRING METHODS W/ REFLECTION" + Constants.getInstance().delimiter);
+        // Using Reflection for fundamental types
+        Class cString = Class.forName("java.lang.String");
+        Method mString[] = cString.getDeclaredMethods();
+        //prints data about every method declared in String
+        for(Method method : mString) {
+            System.out.println(method.toString());
+        }
     }
 }
